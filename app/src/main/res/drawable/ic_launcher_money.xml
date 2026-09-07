@@ -6,7 +6,7 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Background: Deep Blue to Cyan Gradient -->
+    <!-- Background Gradient (Mint Green) -->
     <path android:pathData="M 0 0 L 108 0 L 108 108 L 0 108 Z">
         <aapt:attr name="android:fillColor">
             <gradient 
@@ -15,38 +15,86 @@
                 android:endX="108" 
                 android:endY="108" 
                 android:type="linear">
-                <item android:color="#1A2980" android:offset="0.0"/>
-                <item android:color="#26D0CE" android:offset="1.0"/>
+                <item android:color="#4ADE80" android:offset="0.0"/>
+                <item android:color="#047857" android:offset="1.0"/>
             </gradient>
         </aapt:attr>
     </path>
 
+    <!-- Long Drop Shadow (Diagonal down-right) -->
+    <path 
+        android:fillColor="#33003311" 
+        android:pathData="M 12 58 L 62 108 L 108 108 L 108 58 L 92 42 Z" />
+
+    <!-- Coin: Gold Gradient -->
+    <path android:pathData="M 46,14 a 22,22 0 1,0 0.1,0 z">
+        <aapt:attr name="android:fillColor">
+            <gradient 
+                android:startX="24" 
+                android:startY="14" 
+                android:endX="68" 
+                android:endY="58" 
+                android:type="linear">
+                <item android:color="#FDE047" android:offset="0.0"/>
+                <item android:color="#D97706" android:offset="1.0"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+    
+    <!-- Coin: Inner Ring -->
+    <path 
+        android:strokeColor="#F59E0B" 
+        android:strokeWidth="2" 
+        android:pathData="M 46,18 a 18,18 0 1,0 0.1,0 z" />
+
+    <!-- Coin: Dollar Sign ($) -->
+    <path 
+        android:fillColor="#FFFFFF" 
+        android:pathData="M44.5,20 v-2 h3 v2 c2.5,0.3 4.5,2 4.5,4.5 h-3 c0,-1.2 -1,-2 -2.5,-2 c-1.5,0 -2.5,0.8 -2.5,2 c0,1.1 0.8,1.6 2.8,2.2 c3.3,0.9 5.2,2.3 5.2,5.3 c0,2.8 -2,4.8 -4.5,5.2 v2 h-3 v-2 c-2.8,-0.3 -5,-2.2 -5.2,-5 h3 c0.2,1.5 1.5,2.5 3.2,2.5 c1.6,0 3,-0.9 3,-2.2 c0,-1.3 -1,-1.8 -3.2,-2.4 c-3.1,-0.8 -4.8,-2.2 -4.8,-5.1 c0,-2.6 1.9,-4.5 4.5,-4.8 z" />
+
+    <!-- Wallet Body Base Shadow -->
+    <path 
+        android:fillColor="#1A000000" 
+        android:pathData="M 12 49 h 76 c 6.6,0 12,5.4 12,12 v 22 c 0,6.6 -5.4,12 -12,12 h -76 c -6.6,0 -12,-5.4 -12,-12 v -22 c 0,-6.6 5.4,-12 12,-12 z" />
+
+    <!-- Wallet Body (White / Ice) -->
+    <path 
+        android:fillColor="#F8FAFC" 
+        android:pathData="M 12 48 h 76 c 6.6,0 12,5.4 12,12 v 22 c 0,6.6 -5.4,12 -12,12 h -76 c -6.6,0 -12,-5.4 -12,-12 v -22 c 0,-6.6 5.4,-12 12,-12 z" />
+
+    <!-- Wallet Inside Fold Line (Subtle shadow at top) -->
+    <path 
+        android:fillColor="#E2E8F0" 
+        android:pathData="M 12 48 h 76 c 6.6,0 12,5.4 12,12 v 2 h -100 v -2 c 0,-6.6 5.4,-12 12,-12 z" />
+
+    <!-- Wallet Clasp Base Shadow -->
+    <path 
+        android:fillColor="#1A000000" 
+        android:pathData="M 88 61 h 12 c 4.4,0 8,3.6 8,8 v 6 c 0,4.4 -3.6,8 -8,8 h -12 z" />
+
+    <!-- Wallet Clasp (White) -->
+    <path 
+        android:fillColor="#F1F5F9" 
+        android:pathData="M 88 60 h 12 c 4.4,0 8,3.6 8,8 v 6 c 0,4.4 -3.6,8 -8,8 h -12 z" />
+
+    <!-- Clasp Button (Teal) -->
+    <path 
+        android:fillColor="#059669" 
+        android:pathData="M 98,71 a 4,4 0 1,0 0.1,0 z" />
+
     <!-- Chart Bar 1 (Short) -->
     <path 
-        android:fillColor="#E6FFFFFF" 
-        android:pathData="M 22 76 L 34 76 L 34 54 C 34 51.8 32.2 50 30 50 L 26 50 C 23.8 50 22 51.8 22 54 Z" />
+        android:fillColor="#34D399" 
+        android:pathData="M 24 69 c 0,-2.7 2.3,-5 5,-5 c 2.7,0 5,2.3 5,5 v 6 c 0,2.7 -2.3,5 -5,5 c -2.7,0 -5,-2.3 -5,-5 z" />
         
     <!-- Chart Bar 2 (Medium) -->
     <path 
-        android:fillColor="#FFFFFFFF" 
-        android:pathData="M 48 76 L 60 76 L 60 40 C 60 37.8 58.2 36 56 36 L 52 36 C 49.8 36 48 37.8 48 40 Z" />
+        android:fillColor="#059669" 
+        android:pathData="M 42 59 c 0,-2.7 2.3,-5 5,-5 c 2.7,0 5,2.3 5,5 v 16 c 0,2.7 -2.3,5 -5,5 c -2.7,0 -5,-2.3 -5,-5 z" />
         
     <!-- Chart Bar 3 (Tall) -->
     <path 
-        android:fillColor="#FFFFFFFF" 
-        android:pathData="M 74 76 L 86 76 L 86 24 C 86 21.8 84.2 20 82 20 L 78 20 C 75.8 20 74 21.8 74 24 Z" />
-
-    <!-- Trending Line (Neon Green) -->
-    <path
-        android:strokeColor="#42E695"
-        android:strokeWidth="6"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M 12 64 L 28 44 L 54 52 L 80 24" />
-        
-    <!-- Trending Arrow Head (Neon Green) -->
-    <path
-        android:fillColor="#42E695"
-        android:pathData="M 88 18 L 88 38 L 72 22 Z" />
+        android:fillColor="#064E3B" 
+        android:pathData="M 60 49 c 0,-2.7 2.3,-5 5,-5 c 2.7,0 5,2.3 5,5 v 26 c 0,2.7 -2.3,5 -5,5 c -2.7,0 -5,-2.3 -5,-5 z" />
 
 </vector>
