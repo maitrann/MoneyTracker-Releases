@@ -1,0 +1,69 @@
+name: Android OTA Auto-Update
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-and-publish:
+    name: Build APK and Publish Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+        env:
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+
+      - name: Define Release Tag
+        id: tag
+        run: echo "VERSION_TAG=v1.0.${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Create Release & Upload APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION_TAG }}
+          name: "OTA Update ${{ env.VERSION_TAG }}"
+          body: "Automated OTA build from GitHub Actions."
+          files: app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Gist JSON
+        run: |
+          APK_URL="https://github.com/${{ github.repository }}/releases/download/${{ env.VERSION_TAG }}/app-debug.apk"
+          
+          # Prepare the JSON payload for the Gist update
+          # We escape the quotes for the shell
+          cat <<EOF > payload.json
+          {
+            "files": {
+              "update.json": {
+                "content": "{\n  \"versionCode\": ${{ github.run_number }},\n  \"versionName\": \"1.0.${{ github.run_number }}\",\n  \"releaseNotes\": \"Bản cập nhật tự động tự GitHub Actions!\",\n  \"apkUrl\": \"$APK_URL\"\n}"
+              }
+            }
+          }
+          EOF
+          
+          curl -L \
+            -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GIST_PAT }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/gists/${{ secrets.GIST_ID }} \
+            -d @payload.json

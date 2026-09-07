@@ -1,0 +1,10 @@
+{
+  "cases": [
+    {"name":"dot currency","text":"Thanh toán 125.000đ","amount":125000},
+    {"name":"comma currency","text":"Payment 125,000 VND","amount":125000},
+    {"name":"space currency","text":"Amount 125 000 ₫","amount":125000},
+    {"name":"minus amount","text":"-125.000","amount":125000},
+    {"name":"plus amount","text":"+5.000.000đ","amount":5000000},
+    {"name":"multiline","text":"Payment complete\nAmount: 125.000đ\nThank you","amount":125000}
+  ]
+}

@@ -1,0 +1,14 @@
+.gradle/
+.gradle-user-home/
+.idea/
+local.properties
+**/build/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Security & Credentials
+*.jks
+*.keystore
+google-services.json
