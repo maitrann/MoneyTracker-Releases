@@ -88,8 +88,8 @@ fun OnboardingScreen(
     }
 
     LaunchedEffect(Unit) {
-        // Link JSON kiểm tra update (Sẽ thay bằng link GitHub thật của anh)
-        viewModel.checkForUpdate(context, "https://gist.githubusercontent.com/maitrann/32c55d9c1fc8cd5084295baabcde8cb6/raw/13d5662411b581289784cbffe39f6a6c05ac3429/update.json")
+        // Link JSON kiểm tra update (Luôn lấy bản mới nhất, không gắn mã hash)
+        viewModel.checkForUpdate(context, "https://gist.githubusercontent.com/maitrann/32c55d9c1fc8cd5084295baabcde8cb6/raw/update.json")
     }
 
     if (updateInfo != null) {
