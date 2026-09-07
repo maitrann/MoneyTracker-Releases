@@ -9,6 +9,15 @@ android {
     namespace = "com.personal.moneytracker"
     compileSdk = 35
 
+    signingConfigs {
+        create("config") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.personal.moneytracker"
         minSdk = 26
@@ -22,7 +31,10 @@ android {
     }
 
     buildTypes {
-        debug { applicationIdSuffix = ".debug" }
+        debug { 
+            applicationIdSuffix = ".debug"
+            signingConfig = signingConfigs.getByName("config")
+        }
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
