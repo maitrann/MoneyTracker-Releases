@@ -10,6 +10,8 @@ jobs:
   build-and-publish:
     name: Build APK and Publish Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Code
