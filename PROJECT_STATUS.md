@@ -15,13 +15,13 @@ Codex must update it after completing or auditing a phase.
 | 4 | Cross-app enrichment | COMPLETE |
 | 5 | Categorization rules | COMPLETE |
 | 6 | Google Sheets connection | COMPLETE |
-| 7 | Dashboard | NOT STARTED |
+| 7 | Dashboard | COMPLETE |
 | 8 | Real notification fixture collection | NOT STARTED |
 | 9 | Hardening & V1 audit | NOT STARTED |
 
 ## Current next action
 
-Phase 6 Google Sheets connection is verified (36 tests PASS). Sẵn sàng bắt đầu triển khai Phase 7 (Dashboard UI).
+Phase 7 Dashboard is complete (45 tests PASS). Sẵn sàng bắt đầu Phase 8 (thu thập notification thật từ thiết bị Android) khi có điện thoại thật.
 
 ## Completed foundations
 
@@ -75,13 +75,13 @@ Update this table only from sanitized samples actually captured from the user's 
 Codex should overwrite this section after every phase.
 
 ```text
-Last verified phase: Phase 6
-Build command: .\gradlew.bat clean :app:testDebugUnitTest :app:assembleDebug --no-daemon
+Last verified phase: Phase 7
+Build command: .\gradlew.bat :app:testDebugUnitTest :app:assembleDebug --no-daemon
 Build result: PASS
 Test command: .\gradlew.bat :app:testDebugUnitTest --no-daemon
-Test result: PASS (36 tests)
+Test result: PASS (45 tests)
 Known failing tests: None
-Known limitations: Source-specific MoMo/Timo/Techcombank/Grab notification formats remain unverified because no sanitized device fixtures have been supplied.
+Known limitations: Source-specific MoMo/Timo/Techcombank/Grab notification formats remain unverified because no sanitized device fixtures have been supplied. Google Sheets OAuth client/Sheets API/test sheet not yet set up for real-device testing.
 ```
 
 ## Decisions that must remain stable
@@ -233,6 +233,31 @@ Tests/build:
 
 Known limitations:
 - Cần tạo Android OAuth client, bật Sheets API và thử với một Google Sheet test riêng khi test trên thiết bị thật; không có test sheet thật hay credential nào được commit.
+
+Next phase ready:
+YES
+
+### Phase 7 — 2026-09-08
+
+Status: PASS
+
+Implemented:
+- Added `domain/dashboard/DashboardCalculator.kt`: pure-Kotlin aggregation (no Android/Room dependency) that computes income, expense, net cash flow, per-category expense totals, recent transactions, pending-sync count, and an in-month search filter from a plain `List<CanonicalTransaction>`.
+- Accounting rule enforced in code: `INTERNAL_TRANSFER` transactions are excluded from income, expense, net cash flow, and category totals; they still appear in the recent-transactions list so the user can see the money movement without it being double-counted as spend/earn.
+- Added `feature/dashboard/DashboardViewModel.kt` (Hilt) combining `TransactionRepository.observeAll()` + `CategorizationRepository.observeCategories()` with selected-month and search-query state into a single `DashboardSummary` StateFlow.
+- Added `feature/dashboard/DashboardScreen.kt` (Compose/Material3): month selector (prev/next), income/expense/net cards, pending-sync banner, search field, category breakdown list, and a recent-transactions list showing sync state for non-synced rows.
+- Wired `"dashboard"` route into `MoneyTrackerNavigation.kt` and added a Dashboard entry card to `OnboardingScreen.kt`.
+- No Room schema/migration change was needed; all required fields (`amountVnd`, `type`, `categoryId`, `occurredAtEpochMs`, `syncState`) already existed from Phases 3–6.
+
+Tests/build:
+- Added `DashboardCalculatorTest.kt` (9 new fixture-driven JUnit tests, no Robolectric needed): income/expense totals per month, INTERNAL_TRANSFER excluded from income/expense/net, INTERNAL_TRANSFER excluded from category totals, category grouping/sort order, month-boundary filtering, pending-sync count is global (not month-scoped), search filter across merchant/category/note, category display-name mapping, recent-list sort+limit.
+- Full suite: `.\gradlew.bat :app:testDebugUnitTest :app:assembleDebug --no-daemon` → BUILD SUCCESSFUL, 45 tests PASS (36 previous + 9 new), 0 failures.
+- Clean debug APK assembly succeeded.
+
+Known limitations:
+- Dashboard reads the full transaction list into memory and aggregates client-side (no SQL-level aggregation query); acceptable for a single-user personal dataset per V1 scope, would need revisiting if transaction volume becomes very large.
+- Search is a simple case-insensitive substring match across merchant/service/category/subcategory/description/note/fundingSource/paymentChannel; no advanced filter UI (date range picker, category multi-select, amount range) beyond the month selector and free-text search, per PLANS.md "useful filters/search" (not specified as more granular).
+- Category names in the dashboard come from `CategorizationRepository.observeCategories()`; if a transaction's `categoryId` has no matching row (e.g. deleted/renamed category), the raw id string is shown as a fallback display name.
 
 Next phase ready:
 YES

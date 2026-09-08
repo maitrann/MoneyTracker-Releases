@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Refresh
@@ -75,6 +76,7 @@ fun OnboardingScreen(
     onTransactions: () -> Unit,
     onRules: () -> Unit,
     onSync: () -> Unit,
+    onDashboard: () -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -172,6 +174,12 @@ fun OnboardingScreen(
 
             // Quick Actions
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                ActionCard(
+                    title = "Dashboard",
+                    subtitle = "Income, expense, net cash flow, categories",
+                    icon = Icons.Filled.Home,
+                    onClick = onDashboard
+                )
                 ActionCard(
                     title = "View captured events",
                     subtitle = "Raw parsed notification events",

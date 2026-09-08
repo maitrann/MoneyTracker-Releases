@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.personal.moneytracker.feature.dashboard.DashboardScreen
 import com.personal.moneytracker.feature.debug.DebugEventDetailScreen
 import com.personal.moneytracker.feature.debug.DebugEventListScreen
 import com.personal.moneytracker.feature.onboarding.OnboardingScreen
@@ -18,7 +19,8 @@ import com.personal.moneytracker.feature.sync.SyncSettingsScreen
 fun MoneyTrackerNavigation() {
     val nav = rememberNavController()
     NavHost(navController = nav, startDestination = "onboarding") {
-        composable("onboarding") { OnboardingScreen(onDebug = { nav.navigate("debug") }, onTransactions = { nav.navigate("transactions") }, onRules = { nav.navigate("rules") }, onSync = { nav.navigate("sync") }) }
+        composable("onboarding") { OnboardingScreen(onDebug = { nav.navigate("debug") }, onTransactions = { nav.navigate("transactions") }, onRules = { nav.navigate("rules") }, onSync = { nav.navigate("sync") }, onDashboard = { nav.navigate("dashboard") }) }
+        composable("dashboard") { DashboardScreen(onBack = nav::popBackStack) }
         composable("debug") {
             DebugEventListScreen(onBack = nav::popBackStack, onOpen = { nav.navigate("event/$it") })
         }
